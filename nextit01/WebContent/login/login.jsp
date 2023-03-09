@@ -8,6 +8,32 @@
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/nextit_log.jpg" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/login.css">
 
+<%
+String msg = request.getParameter("msg");
+System.out.println("msg : " + msg);
+
+if(msg != null && msg.equals("null")){
+	out.print("<script>");
+	out.print("alert('ID또는 PASSWORD를 입력해주세요')");
+	out.print("</script>");
+}else if(msg != null && msg.equals("fail")){
+	out.print("<script>");
+	out.print("alert('로그인에 실패 하였습니다 ID 또는 PASSWORD를 확인해주세요.')");
+	out.print("</script>");
+}
+
+
+Cookie[] cookies = request.getCookies();
+if(cookies != null && cookies.length>0){
+	for(int i=0; i< cookies.length; i++) {
+		if(cookies[i].getName().equals("rememberMe")){
+			request.setAttribute("checkBox","checked");
+			request.setAttribute("memId", cookies[i].getValue());
+		}
+	}
+}
+
+%>
 <script>
 function fn_login() {
 	console.log("fn_login");
@@ -31,7 +57,7 @@ function fn_login() {
     <h1>NextIT</h1>
     <form name="loginForm" method="post">
         <div class="int-area">
-            <input type="text" id="memId" name="memId" value="" autocomplete="off" required>  
+            <input type="text" id="memId" name="memId" value="${memId}" autocomplete="off" required>  
             <label for="memId">USER ID</label>
         </div>
         <div class="int-area">
@@ -40,7 +66,7 @@ function fn_login() {
         </div>
         <div class="div_rememberMe">
       		<label for="rememberMe">
-				<input type="checkbox" id="rememberMe" name="rememberMe"  value="Y"/>&nbsp;&nbsp;ID 기억하기
+				<input type="checkbox" id="rememberMe" name="rememberMe"  value="Y" ${checkBox}/>&nbsp;&nbsp;ID 기억하기
 			</label>
         </div>
         <div class="btn-area">

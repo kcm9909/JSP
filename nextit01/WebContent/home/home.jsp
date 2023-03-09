@@ -34,13 +34,22 @@ window.onload= function(){
 
     },4000);
 }
+
+
+function fn_logout() {
+	console.log("fn_logout");
+	let ret = confirm("로그아웃하시겠습니까?");
+	if(ret == true) {
+		location.href = "${pageContext.request.contextPath}/login/logout.jsp";
+	}
+}
 </script>
 </head>
 <body>
 <div id="wrap">
     <div id="img_div" class="intro_bg">
         <div class="header">
-            <!-- hearder s-->
+            <!-- header s-->
             <div class="searchArea">
                 <form action="">
                     <input type="text" id="input_search" name="input_search"
@@ -60,6 +69,17 @@ window.onload= function(){
                 </li>
                 <li><a href="#content">CONTENT</a></li>
                 <li><a href="#">FREEBOARD</a></li>
+                
+                
+                  <li><a href ="#">${memberVO.memId}</a>
+                  		<ul>
+                  				<li>info</li>
+                  				<li><a href="#" onclick="fn_logout()">logout</a></li>
+                  
+                  		</ul>
+                  </li>
+                  	
+                
             </ul>
             <!-- header e -->
 
